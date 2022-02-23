@@ -1,0 +1,14 @@
+M:bank5
+S:G$stage1animtiles_bin$0$0({2560}DA2560d,SC:U),D,0,0
+S:G$bigboss_zx7$0$0({2046}DA2046d,SC:U),D,0,0
+S:G$bigdouble_zx7$0$0({1956}DA1956d,SC:U),D,0,0
+S:G$stage1tiles_zx7$0$0({1782}DA1782d,SC:U),D,0,0
+S:G$logotiles_zx7$0$0({1703}DA1703d,SC:U),D,0,0
+S:G$bigrobot2_zx7$0$0({960}DA960d,SC:U),D,0,0
+S:G$playerc_zx7$0$0({956}DA956d,SC:U),D,0,0
+S:G$playerdb_zx7$0$0({916}DA916d,SC:U),D,0,0
+S:G$player_zx7$0$0({912}DA912d,SC:U),D,0,0
+S:G$soldierdown_zx7$0$0({901}DA901d,SC:U),D,0,0
+S:G$playerd_zx7$0$0({860}DA860d,SC:U),D,0,0
+S:G$bigblob_zx7$0$0({710}DA710d,SC:U),D,0,0
+S:G$introtiles2_zx7$0$0({120}DA120d,SC:U),D,0,0
