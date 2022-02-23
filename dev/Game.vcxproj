@@ -28,11 +28,13 @@
     <ClInclude Include="banks\bank5.h" />
     <ClInclude Include="banks\bank6.h" />
     <ClInclude Include="banks\bank7.h" />
+    <ClInclude Include="banks\fixedbank.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="devkit\_sms_manager.h" />
     <ClInclude Include="devkit\_snd_manager.h" />
-    <ClInclude Include="funcs.h" />
+    <ClInclude Include="functions.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="includes.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="vars.h" />
   </ItemGroup>
@@ -43,11 +45,13 @@
     <ClCompile Include="banks\bank5.c" />
     <ClCompile Include="banks\bank6.c" />
     <ClCompile Include="banks\bank7.c" />
+    <ClCompile Include="banks\fixedbank.c" />
     <ClCompile Include="defines.c" />
     <ClCompile Include="devkit\_sms_manager.c" />
     <ClCompile Include="devkit\_snd_manager.c" />
-    <ClCompile Include="funcs.c" />
+    <ClCompile Include="functions.c" />
     <ClCompile Include="game.c" />
+    <ClCompile Include="includes.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="vars.c" />
   </ItemGroup>

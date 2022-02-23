@@ -1,326 +1,354 @@
-#ifndef _DEFINES_H_
-#define _DEFINES_H_
+#ifndef _DEFINES_H
+#define _DEFINES_H
 
-//#include "Banks\bank2.h"
-//#include "Banks\bank3.h"
-//#include "Banks\bank4.h"
-//#include "Banks\bank5.h"
-//#include "Banks\bank6.h"
-//#include "Banks\bank7.h"
-//#include "Banks\bank8.h"
-//#include "Banks\bank9.h"
-//#include "Banks\bank10.h"
-//#include "Banks\bank11.h"
-//#include "Banks\bank12.h"
-//#include "Banks\bank13.h"
-//#include "Banks\bank14.h"
-//#include "Banks\bank15.h"
+// Truqui
+#define PLAYERINMUNENO
 
-// For debug only
-#define PLAYERINMUNE
+// Balout
+typedef void( *MyBaloutUpdateFunction )( void );
 
-// Player shoot speeds
-#define SPEEDPLAYERSHOOT_NORMAL 10
-#define SPEEDPLAYERSHOOT_SIDE 7
-#define SPEEDPLAYERSHOOT_SIDE_VERTICAL 3
+// Estados del player
+#define PLAYER_DAMAGED 1
+#define PLAYER_DAMAGEDB 2
+#define PLAYER_DIE 3
+#define PLAYER_JUMP 4
+#define PLAYER_WALK 5
+#define PLAYER_FALL 6
 
-// Default enemy shoot speed
-#define DEFAULTENEMYSHOOTSPEED 5
-#define DEFAULTENEMYSHOOTLASERSPEED 7
+// Velocidades del player
+#define PLAYERFALLMAX 4
+#define PLAYERWALKSPEED 2
+#define PLAYERJUMPFORCE 11
 
+// Tiempo para disparar de nuevo
+#define PLAYERSHOOTCOUNTERDEFAULT 4
+#define NOUSEPLAYERSHOOTCOUNTER
+
+// Damages
+#define DAMAGEVEL 2
+#define DAMAGEVELZ 7
+#define DAMAGEVELZB 4
+
+// Player shoot durations
+#define PLAYERSHOOTADURATION 6
+#define PLAYERSHOOTBDURATION 8
+#define PLAYERSHOOTCDURATION 8
+#define PLAYERSHOOTDDURATION 50
+
+// Player shoot max quantities
+#define PLAYERSHOOTAQUANTITY 1
+#define PLAYERSHOOTBQUANTITY 2
+#define PLAYERSHOOTCQUANTITY 3
+#define PLAYERSHOOTDQUANTITY 3
+
+// Max sprites for playershoots
+#define PLAYERSHOOTAMAXSPRITES 4
+#define PLAYERSHOOTBMAXSPRITES 0
+#define PLAYERSHOOTCMAXSPRITES 0
+#define PLAYERSHOOTDMAXSPRITES 0
+
+// For enemy shoots
+#define ENEMYSHOOTDURATION 100
+#define ENEMYSHOOTMAXSPRITES 2
+#define ENEMYSHOOTMINDIST 64
+#define ENEMYSHOOTSPEED 4
+
+// Time of inmunity
+#define PLAYERINMUNITYTIME 32
+
+// Gravedad
+#define GRAVITY 1
+
+// Hacia donde se mira
+#define PLAYER_UP 1
+#define PLAYER_RIGHT 2
+#define PLAYER_DOWN 4
+#define PLAYER_LEFT 8
+
+// Tipo de tiles
+#define TILE_EMPTY 1
+#define TILE_SOLID 2
+#define TILE_FLOOR 3
+#define TILE_DEAD 4
+#define TILE_EXIT 5
+#define TILE_UP 6
+#define TILE_LEFT 7
+#define TILE_RIGHT 8
+#define TILE_DOWN 9
+
+// Enemigos
+typedef struct _enemydef enemydef;
 typedef struct enemy
 {
-	unsigned char enemyposx;
-	unsigned char enemyposy;
-	unsigned char enemytype;
-	unsigned char enemyframe;
-	unsigned char enemyparama;
-	unsigned char enemyparamb;
-	unsigned char enemyenergy;
-	unsigned char enemywidth;
-	unsigned char enemyheight;
+	enemydef *ed;
+	signed char side;
+	signed char velx;
+	signed char vely;
+	signed char velz;
+	unsigned int posx;
+	unsigned int posy;
+	unsigned char  posz;
+	unsigned char state;
+	unsigned char tile;
+	unsigned char energy;
+	unsigned int frame;
+	signed char param;
+	signed char slot;
+	unsigned char base;
+	signed char sprite;
+	unsigned int centerx;
+	unsigned int centery;
 }enemy;
+
+// Funcs
 typedef void( *MyInitEnemyFunction )( enemy * );
 typedef unsigned char( *MyUpdateEnemyFunction )( enemy * );
-// IMPORTANT 
-// don't put the following here otherwise
-// warning C4113: 'void (__cdecl *)()' differs in parameter lists from
-// typedef void( *MyKillEnemyFunction )(void);
-typedef void( *MyKillEnemyFunction )( );
-typedef unsigned char( *MyCheckCollisionFunction )( unsigned char, unsigned char );
+typedef void( *MyCollideEnemyFunction )( enemy * );
+typedef void( *MyDamageEnemyFunction )( enemy * );
+typedef void( *MyKillEnemyFunction )( enemy * );
+typedef void( *MyStageUpdateFunction )( void );
 
-// Sound bank
-#define SOUNDBANK 2
+typedef struct enemyzone
+{
+	unsigned int zoneleft;
+	unsigned int zoneright;
+	unsigned int zonetop;
+	unsigned int zonebottom;
+}enemyzone;
 
-//////////////////////////////////////////////////////////
-// SCRIPTING
-#define SCRIPT_ADVANCESCROLLER 1
-#define SCRIPT_INITENEMY 2
-#define SCRIPT_SETPALETTE 3
-#define SCRIPT_FILLBACKGROUND 4
-#define SCRIPT_KILLENEMIES 5
-#define SCRIPT_LOOP 6
-#define SCRIPT_SETEXPLOSION 7
-#define SCRIPT_END 8
-#define SCRIPT_INITSCRIPT 9
-#define SCRIPT_SETLABEL 10
+// Enemy definitions
+struct _enemydef
+{
+	unsigned char energy;
+	unsigned char damageable;
+	unsigned char dangerous;
+	unsigned char gravity;
+	unsigned char collideable;
+	unsigned char width;
+	unsigned char height;
+	MyInitEnemyFunction eif;
+	MyUpdateEnemyFunction euf;
+	MyCollideEnemyFunction ecf;
+	MyDamageEnemyFunction edf;
+	MyKillEnemyFunction ekf;
+};
 
+// Enemy slot
+typedef struct enemyslot
+{
+	unsigned int posx;
+	unsigned int posy;
+	signed char param;
+	enemydef *ed;
+	unsigned char usezone;
+	enemyzone zone;
+}enemyslot;
 
-//////////////////////////////////////////////////////////
-// ENEMIES
+// Enemy sprites
+typedef struct enemyspritebase
+{
+	enemydef *ed;
+	unsigned char base;
+	void *sprite;
+	unsigned char spritebank;
+}enemyspritebase;
 
-// Warning!
-#define WARNING 1
+typedef struct platformdef
+{
+	unsigned int posx;
+	unsigned int posy;
+	unsigned int minval;
+	unsigned int maxval;
+	unsigned char isvertical;
+}platformdef;
 
-// Objects of intro and finish
-#define INTROOVNILEFT 2
-#define INTROOVNIRIGHT 3
-#define INTROSIDEPLAYER 4
-#define INTROSTAR 5
+// Stage definitions
+typedef struct stagedef
+{
+	unsigned char exitablestage;
+	unsigned char stageplayerinitx;
+	unsigned char stageplayerinity;
+	unsigned char stageplayerside;
+	unsigned char *stagepalette;
+	unsigned char stagepalettebank;
+	unsigned char *stagetilemap;
+	unsigned char stagetilemapbank;
+	unsigned int stagewidth;
+	unsigned int stageheight;
+	unsigned char *stagetilemappings;
+	unsigned char *stagetiles;
+	unsigned char stagetilesbank;
+	unsigned char *stagemusic;
+	unsigned char stagemusicbank;
+	MyStageUpdateFunction stageupdatecustomfunc;
+	enemyslot *enemies;
+	unsigned char numenemies;
+	enemyspritebase *enemysprites;
+	unsigned char numenemysprites;
+	platformdef *platforms;
+	unsigned char numplatforms;
+	unsigned char *stagetiletypesa;
+	unsigned char *stagetiletypesb;
+}stagedef;
 
-// Stage 4 enemies
-#define WAVESHIP 6
-#define RECTSHIP 7
-#define TURNSHIP 8
-#define BOMBSHIPLEFT 9
-#define BOMBSHIPRIGHT 10
-#define SPREADSHIP 11
+// Shoots
+typedef struct shoot
+{
+	unsigned int posx;
+	unsigned int posy;
+	unsigned char posz;
+	signed char velx;
+	signed char vely;
+	unsigned char sprite;
+	unsigned char maxsprite;
+	unsigned char maxduration;
+}shoot;
 
-// Stage 4 bosses
-#define STAGE4MIDDLEBOSS 12
-#define STAGE4ENDBOSS 13
+// Goodies
+typedef struct goodie
+{
+	unsigned int posx;
+	unsigned int posy;
+	unsigned char posz;
+	signed char velz;
+	unsigned char goodie;
+	unsigned char state;
+}goodie;
 
-// Stage 5 enemies
-#define WW2ZEPPELIN 14
-#define WW2SHIP 15
-#define WW2PLANE_TYPE_A 16
-#define WW2PLANE_TYPE_B 17
-#define WW2PLANE_TYPE_C 18
-#define WW2PLANE_TYPE_D 19
-#define WW2PLANE_TYPE_E 20
-#define WW2PLANE_TYPE_F 21
-#define WW2TANKLEFT 22
-#define WW2TANKRIGHT 23
+// Default bank for fixed bank
+#define FIXEDBANKSLOT 7
 
-// Stage 5 boss
-#define STAGE5ENDBOSS 24
+// Stages
+#define TOTAL_STAGES 23
+#define ENDING_STAGE TOTAL_STAGES
+#define GAMEOVER_STAGE TOTAL_STAGES+1
+#define EXIT_STAGE TOTAL_STAGES+2
 
-// Intro 3 object
-#define INTRO3OBJECT 25
+// Game config
+#define DEFAULT_LIFES 3
+#define MAX_LIFES 6
 
-// Stage 7 enemies
-#define MONSTERBLOB 26
-#define MONSTERHEAD 27
-#define MONSTERMISSILLEFT 28
-#define MONSTERMISSILRIGHT 29
+// Cursors for jukebox
+#define CURSORSBASE 0
 
-// Stage 7 boss
-#define STAGE7MIDDLEBOSS 30
-#define STAGE7ENDBOSS 31
+// Number of songs in jukebox
+#define JUKEBOX_SONGS 9
 
-// Stage 7 object
-#define STAGE7OBJECT 32
+// Max explosions
+#define MAXEXPLOSIONS 4
 
-// Stage 1 enemies
-#define FORTRESSSEARCHER 33
-#define FORTRESSDOOR 34
-#define FORTRESSWAVE 35
-#define FORTRESSPHANTOM 36
-#define FORTRESSCANNONLEFT 37
-#define FORTRESSCANNONRIGHT 38
+// Max enemies
+#define MAXENEMIES 10
 
-// Stage 1 bosses
-#define STAGE1MIDDLEBOSS 39
-#define STAGE1ENDBOSS 40
+// Max enemyslots
+#define MAXENEMYSLOTS 40
 
-// Stage 4 delayer
-#define STAGE4OBJECT 41
+// Max shoots
+#define MAXPLAYERSHOOTS PLAYERSHOOTDQUANTITY
+#define MAXENEMYSHOOTS 6
 
-// Stage 2 enemies
-#define VULCANSTATION 42
-#define VULCANVULCAN 43
-#define VULCANBIRD 44
-#define VULCANLASER 45
-#define VULCANLAVA 46
-#define VULCANTANKLEFT 47
-#define VULCANTANKRIGHT 48
-#define VULCANTANKSTOP 49
-
-// Stage 2 boss
-#define STAGE2ENDBOSS 50
-
-// Stage 2 delayer
-#define STAGE2OBJECT 51
-
-// Stage 3 enemies
-#define SPACEASTEROIDBIG 52
-#define SPACEASTEROIDMEDIUM 53
-#define SPACEASTEROIDLITTLE 54
-#define SPACESTATION 55
-#define SPACESHOOTER 56
-
-// Stage 3 boss
-#define STAGE3ENDBOSS 57
-
-// Stage 6 boss
-#define STAGE6ENDBOSS 58
-#define SKULLBONEA 59
-#define SKULLBONEB 60
-#define SKULLBONEC 61
-
-// Bosses elements
-#define STAGE5MISSILE 62
-#define STAGE7ENDBOSSB 63
-#define STAGE4ENDBOSSB 64
-#define STAGE4ENDBOSSC 65
-#define STAGE3ENDBOSSB 66
-
-#define STAGE3LASERUP 67
-#define STAGE3LASERUPRIGHT 68
-#define STAGE3LASERRIGHT 69
-#define STAGE3LASERDOWNRIGHT 70
-#define STAGE3LASERDOWN 71
-#define STAGE3LASERDOWNLEFT 72
-#define STAGE3LASERLEFT 73
-#define STAGE3LASERUPLEFT 74
-
-#define STAGE1MIDDLEBOSSB 75
-#define STAGE1MIDDLEBOSSC 76
-#define STAGE6ENDBOSSB 77
-#define STAGE6OBJECT 78
-
-#define STAGE8BOSSA 79
-#define STAGE8BOSSB 80
-#define STAGE8BOSSC 81
-#define STAGE8SHOOTER 82
-#define RSGTHING 83
-
-#define WW2PLANEB 84
-#define STAGE8LATERAL 85
-
-//////////////////////////////////////////////////////////
-// WW2PLANE SPEEDS AND DIRECTIONS
-
-#define WW2PLANE_SPEED 4
-#define WW2PLANE_SPEED_HALF 3
-
-#define WW2PLANE_DIR_UP 0
-#define WW2PLANE_DIR_LEFT 1
-#define WW2PLANE_DIR_RIGHT 2
-#define WW2PLANE_DIR_DOWN 3
-#define WW2PLANE_DIR_DOWNRIGHT 4
-#define WW2PLANE_DIR_DOWNLEFT 5
-#define WW2PLANE_DIR_UPLEFT 6
-#define WW2PLANE_DIR_UPRIGHT 7
-#define WW2PLANE_END 8
-
-//////////////////////////////////////////////////////////
-// SPRITES
-
-// Intro and ending
-#define INTROOVNIBASE 310
-#define INTROSIDEPLAYERBASE 310
-#define INTROSTARBASE 314
-
-// Jukebox
-#define CURSORSBASE 256
-
-// Player
-#define PLAYERBASE 256
-#define PLAYERINDICATORBASE 270
-#define PLAYERSHOOTBASE 272
-
-// Powerup
-#define POWERUPBASE 276
+// Goodies
+#define MAXGOODIES 4
 
 // Explosions
-#define SHOOTEXPLOSIONBASE 270+12
-#define LITTLEEXPLOSIONBASE 270+12
-#define BIGEXPLOSIONBASE 273+12
+typedef struct explosion
+{
+	unsigned int posx;
+	unsigned int posy;
+	unsigned char extype;
+	unsigned char sprite;
+}explosion;
 
-// Enemy shoots
-#define ENEMYSHOOTBASE 297+12
+// Map
+#define MAXMAPSPEED 4
+#define MAPOFFSETX 120
+#define MAPOFFSETY 112
 
-// Warning
-#define WARNINGBASE 301+12
+// Margin
+#define MAPMARGIN 16
 
-// Enemies at Stage 4
-#define RECTSHIPBASE 315+12
-#define BOMBSHIPBASE 321+12
-#define SPREADSHIPBASE 333+12
-#define TURNSHIPBASE 349+12
-#define WAVESHIPBASE 361+12
+// Sprite bases
+#define PLAYERBASE 0
+#define PLAYERUPBASE (PLAYERBASE+0)
+#define PLAYERUPRIGHTBASE (PLAYERBASE+14)
+#define PLAYERRIGHTBASE (PLAYERBASE+14)
+#define PLAYERDOWNRIGHTBASE (PLAYERBASE+14)
+#define PLAYERDOWNBASE (PLAYERBASE+28)
+#define PLAYERDOWNLEFTBASE (PLAYERBASE+42)
+#define PLAYERLEFTBASE (PLAYERBASE+42)
+#define PLAYERUPLEFTBASE (PLAYERBASE+42)
+#define PLAYERFALLBASE (PLAYERBASE+56)
+#define PLAYERINDICATORBASE (PLAYERBASE+68)
+#define PLAYERCOINBASE (PLAYERBASE+69)
+#define PLAYERSHOOTBASE (PLAYERBASE+70)
+#define SHADOWBASE (PLAYERBASE+78)
+#define BIGEXPLOSIONBASE (PLAYERBASE+79)
+#define LITTLEEXPLOSIONBASE (PLAYERBASE+91)
+#define NUMBERSBASE (PLAYERBASE+94)
+#define ENEMYSHOOTBASE (PLAYERBASE+104)
+#define PLATFORMBASE (PLAYERBASE+106)
+#define ENEMYBASE (PLAYERBASE+115)
 
-// Stage 4 bosses
-#define STAGE4MIDDLEBOSSBASE 373+12
-#define STAGE4ENDBOSSBASE 398+12
-#define STAGE4ENDBOSSBASEC 416+12
-#define STAGE4ENDBOSSBASEB 434+12
+// Player shoot bases
+#define PLAYERSHOOTUPBASE (PLAYERSHOOTBASE+0)
+#define PLAYERSHOOTRIGHTBASE (PLAYERSHOOTBASE+1)
+#define PLAYERSHOOTDOWNBASE (PLAYERSHOOTBASE+2)
+#define PLAYERSHOOTLEFTBASE (PLAYERSHOOTBASE+3)
+#define PLAYERSHOOTUPRIGHTBASE (PLAYERSHOOTBASE+4)
+#define PLAYERSHOOTDOWNRIGHTBASE (PLAYERSHOOTBASE+5)
+#define PLAYERSHOOTDOWNLEFTBASE (PLAYERSHOOTBASE+6)
+#define PLAYERSHOOTUPLEFTBASE (PLAYERSHOOTBASE+7)
 
-// Enemies at Stage 2
-#define WW2PLANEBASE 315+12
-#define WW2TANKBASE 355+12
-#define WW2ZEPPELINBASE 371+12
-#define WW2SHIPBASE 379+12
+// Intro bases
+#define INTROSHIP_BASE (0)
+#define INTROBOSS_BASE (18)
+#define INTROSTAR_BASE (18+54)
+#define INTROPLANETSLIDE_BASE (18+54+1)
+#define INTROLITTLESHIP_BASE  (18+54+1+4)
+#define INTROFLYINGMAN_BASE   (ENEMYBASE)
+#define INTROFLYINGMANB_BASE  (ENEMYBASE+1)
+#define INTROTHEEND_BASE      (ENEMYBASE+1+1)
+#define BROKENPLANET_BASE     (37+256)
 
-// Stage 2 boss
-#define STAGE5ENDBOSSBASE 383+12
-#define STAGE5MISSILEBASE 418+12
-#define STAGE5MISSILEBASEB 419+12
+// Labels image
+#define BASELABELSIMAGE 391
 
-// Stage 2 cloud
-#define STAGE5CLOUDBASE 383+12+40
+// Labels
+typedef struct labelscr
+{
+	const unsigned char labela[ 21 ];
+	const unsigned char labelb[ 21 ];
+	const void *image;
+	const unsigned char imagebank;
+	const unsigned char labelslot;
+}labelscr;
 
-// Enemies at stage 7
-#define MONSTERBLOBBASE 315+12
-#define MONSTERHEADBASE 327+12
-#define MONSTERMISSILBASE 354+12
+// Intro definition (common for init&ending)
+typedef struct introdef
+{
+	const MyStageUpdateFunction *functions;
+	const unsigned char exitstate;
+	const unsigned char numlabels;
+	const unsigned int *statetime;
+	const unsigned int *labelstime;
+	const labelscr *labels;
+}introdef;
 
-// Stage 7 bosses
-#define STAGE7ENDBOSSBASE 370+12
-#define STAGE7MIDDLEBOSSBASE 383+12  
+// Platform definition
 
-// Stage 1 enemies
-#define FORTRESSSEARCHERBASE 315+12
-#define FORTRESSDOORBASE 339+12
-#define FORTRESSWAVEBASE 343+12
-#define FORTRESSPHANTOMBASE 347+12
-#define FORTRESSCANNONBASE 363+12
+#define MAXPLATFORMS 6
+typedef struct platform
+{
+	unsigned char isvertical;
+	unsigned int posx;
+	unsigned int posy;
+	unsigned int maxval;
+	unsigned int minval;
+	signed char vel;
+}platform;
 
-// Stage 1 bosses
-#define STAGE1MIDDLEBOSSBASE 379+12
-#define STAGE1ENDBOSSBASE 404+12
+// Gusan velocities
+#define GUSANVELX 3
+#define GUSANVELY 2
 
-// Stage 2 enemies
-#define VULCANVULCANBASE 315+12
-#define VULCANLAVABASE 319+12
-#define VULCANBIRDBASE 323+12
-#define VULCANLASERBASE 347+12
-#define VULCANTANKBASE 355+12
-#define VULCANSTATIONBASE 375+12
-
-// Stage 2 bosses
-#define STAGE2ENDBOSSBASE 395+12
-
-// Stage 2 enemies
-#define SPACEASTEROIDBIGBASE 373+12
-#define SPACEASTEROIDMEDIUMBASE 382+12
-#define SPACEASTEROIDLITTLEBASE 386+12
-#define SPACESTATIONBASE 387+12
-#define STAGE3STARBASE 396+12
-#define SPACESHOOTERBASE 398+12
-
-// Stage 3 bosses
-#define STAGE3ENDBOSSBASE 410+12
-
-// Stage 6 boss
-#define STAGE6ENDBOSSBASE 353+12
-#define SKULLBONEBASE 353+35+12
-
-// Stage 8 bosses
-#define STAGE8SHOOTERBASE 398+12
-#define STAGE8BOSSBBASE 447-128
-#define STAGE8BOSSCBASE 410+12
-#define STAGE8LATERALBASE 410+12+16
-
-#endif//_DEFINES_H_
+#endif

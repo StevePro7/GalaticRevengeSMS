@@ -19,23 +19,23 @@
     <Filter Include="Source Files\devkit">
       <UniqueIdentifier>{4e80b205-f605-4774-8dd3-de0555a711ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\General">
-      <UniqueIdentifier>{da24e3c9-579b-4617-96f4-86215953d47d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\banks">
       <UniqueIdentifier>{cd35fa49-36af-4506-89a2-1f6607628158}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\banks">
       <UniqueIdentifier>{f77f968a-b2de-4ea3-96b5-0203a57775a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\General">
-      <UniqueIdentifier>{412e229a-9cf7-4cd7-85b6-96829abde088}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\common">
       <UniqueIdentifier>{87d33f64-9f2b-40ed-a9c4-0fc7780ca417}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\common">
       <UniqueIdentifier>{26aed8f5-1b89-4da4-a110-b126deee07ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\general">
+      <UniqueIdentifier>{da24e3c9-579b-4617-96f4-86215953d47d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\general">
+      <UniqueIdentifier>{412e229a-9cf7-4cd7-85b6-96829abde088}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,9 +49,6 @@
       <Filter>Source Files\devkit</Filter>
     </ClCompile>
     <ClCompile Include="defines.c">
-      <Filter>Source Files\common</Filter>
-    </ClCompile>
-    <ClCompile Include="funcs.c">
       <Filter>Source Files\common</Filter>
     </ClCompile>
     <ClCompile Include="vars.c">
@@ -78,6 +75,15 @@
     <ClCompile Include="banks\bank7.c">
       <Filter>Source Files\banks</Filter>
     </ClCompile>
+    <ClCompile Include="includes.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="functions.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="banks\fixedbank.c">
+      <Filter>Source Files\banks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat">
@@ -100,9 +106,6 @@
     <ClInclude Include="defines.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="funcs.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
     <ClInclude Include="vars.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
@@ -122,6 +125,15 @@
       <Filter>Header Files\banks</Filter>
     </ClInclude>
     <ClInclude Include="banks\bank7.h">
+      <Filter>Header Files\banks</Filter>
+    </ClInclude>
+    <ClInclude Include="includes.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="functions.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="banks\fixedbank.h">
       <Filter>Header Files\banks</Filter>
     </ClInclude>
   </ItemGroup>
