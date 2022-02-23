@@ -60,6 +60,24 @@
     <ClCompile Include="game.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="banks\bank2.c">
+      <Filter>Source Files\banks</Filter>
+    </ClCompile>
+    <ClCompile Include="banks\bank3.c">
+      <Filter>Source Files\banks</Filter>
+    </ClCompile>
+    <ClCompile Include="banks\bank4.c">
+      <Filter>Source Files\banks</Filter>
+    </ClCompile>
+    <ClCompile Include="banks\bank5.c">
+      <Filter>Source Files\banks</Filter>
+    </ClCompile>
+    <ClCompile Include="banks\bank6.c">
+      <Filter>Source Files\banks</Filter>
+    </ClCompile>
+    <ClCompile Include="banks\bank7.c">
+      <Filter>Source Files\banks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat">
@@ -87,6 +105,24 @@
     </ClInclude>
     <ClInclude Include="vars.h">
       <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="banks\bank2.h">
+      <Filter>Header Files\banks</Filter>
+    </ClInclude>
+    <ClInclude Include="banks\bank3.h">
+      <Filter>Header Files\banks</Filter>
+    </ClInclude>
+    <ClInclude Include="banks\bank4.h">
+      <Filter>Header Files\banks</Filter>
+    </ClInclude>
+    <ClInclude Include="banks\bank5.h">
+      <Filter>Header Files\banks</Filter>
+    </ClInclude>
+    <ClInclude Include="banks\bank6.h">
+      <Filter>Header Files\banks</Filter>
+    </ClInclude>
+    <ClInclude Include="banks\bank7.h">
+      <Filter>Header Files\banks</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
